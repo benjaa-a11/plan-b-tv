@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0066ff">
+    <link rel="manifest" href="manifest.json">
+    <title>Plan B TV - Televisión Digital Avanzada</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+</head>
+<body data-navigation="remote">
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                <div class="logo-icon">
+                    <div class="signal-bars">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                </div>
+                <h1>Plan B TV</h1>
+            </div>
+            <div class="loader-spinner"></div>
+            <p id="loaderText">Cargando canales...</p>
+            <div class="loader-progress">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="app" class="app hidden">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="signal-bars">
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                            <div class="bar"></div>
+                        </div>
+                    </div>
+                    <h1>Plan B TV</h1>
+                </div>
+                <div class="header-controls">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Buscar canales..." class="search-input" autocomplete="off">
+                        <button class="search-btn" id="searchBtn" data-focus="search">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                        <button class="clear-search-btn hidden" id="clearSearchBtn" data-focus="clear">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <button id="refreshBtn" class="control-btn" title="Actualizar canales" data-focus="refresh">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <polyline points="1 20 1 14 7 14"></polyline>
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                        </svg>
+                    </button>
+                    <button id="fullscreenBtn" class="control-btn" title="Pantalla completa" data-focus="fullscreen">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Video Player -->
+            <div id="playerContainer" class="player-container hidden">
+    <div class="player-wrapper">
+        <div class="video-container">
+            <video id="videoPlayer" class="video-player" preload="none" playsinline 
+                   webkit-playsinline muted autoplay></video>
+            <!-- Enhanced Iframe for external players -->
+            <iframe id="videoIframe" class="video-iframe" width="100%" height="100%" 
+              name="iframe" title="Live Video" frameborder="0" 
+              allow="autoplay; encrypted-media; fullscreen; picture-in-picture; accelerometer; gyroscope" 
+              allowfullscreen src="about:blank" scrolling="no" loading="lazy"></iframe>
+            <div class="loading-overlay hidden" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <p>Cargando canal...</p>
+            </div>
+        </div>
+        <div class="player-overlay auto-hide" id="playerOverlay">
+            <div class="player-top-bar">
+                <div class="channel-info">
+                    <div class="channel-logo-container">
+                        <img id="currentChannelLogo" src="/placeholder.svg" alt="" class="current-channel-logo">
+                    </div>
+                    <div class="current-channel-details">
+                        <h3 id="currentChannelName"></h3>
+                        <p id="currentChannelCategory"></p>
+                        <span class="live-indicator">
+                            <span class="live-dot"></span>
+                            EN VIVO
+                        </span>
+                    </div>
+                </div>
+                <div class="player-actions">
+                    <button id="backToGrid" class="back-btn" data-focus="back">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                        </svg>
+                        <span>Volver</span>
+                    </button>
+                </div>
+            </div>
+            <div class="player-bottom-bar" id="playerBottomBar">
+                <div class="player-controls" id="playerControls">
+                    <button class="control-btn" id="playPauseBtn" data-focus="play" title="Reproducir/Pausar">
+                        <svg class="play-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                            <polygon points="5,3 19,12 5,21"></polygon>
+                        </svg>
+                        <svg class="pause-icon hidden" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="6" y="4" width="4" height="16"></rect>
+                            <rect x="14" y="4" width="4" height="16"></rect>
+                        </svg>
+                    </button>
+                    <button class="control-btn" id="muteBtn" data-focus="mute" title="Silenciar">
+                        <svg class="volume-on" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                        </svg>
+                        <svg class="volume-off hidden" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="11,5 6,9 2,9 2,15 6,15 11,19"></polygon>
+                            <line x1="23" y1="9" x2="17" y2="15"></line>
+                            <line x1="17" y1="9" x2="23" y2="15"></line>
+                        </svg>
+                    </button>
+                    <div class="volume-slider">
+                        <input type="range" id="volumeSlider" min="0" max="100" value="100" data-focus="volume" title="Volumen">
+                    </div>
+                    <button class="control-btn" id="fullscreenPlayerBtn" data-focus="fullscreen-player" title="Pantalla completa">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="player-info" id="playerInfo">
+                    <div class="connection-indicator" id="connectionIndicator">
+                        <div class="signal-strength">
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                            <div class="signal-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Channels Grid -->
+            <div id="channelsGrid" class="channels-section">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>Canales Disponibles</h2>
+                        <div class="refresh-indicator hidden" id="refreshIndicator">
+                            <div class="refresh-spinner"></div>
+                            <span>Actualizando...</span>
+                        </div>
+                    </div>
+                    <div class="filters">
+                        <select id="categoryFilter" class="filter-select" title="Filtrar por categoría" data-focus="category">
+                            <option value="">Todas las categorías</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="channelsList" class="channels-grid">
+                    <!-- Channels will be loaded here -->
+                </div>
+                <div id="noChannels" class="no-channels hidden">
+                    <div class="no-channels-icon">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </div>
+                    <h3>No se encontraron canales</h3>
+                    <p>Intenta ajustar los filtros de búsqueda o actualizar la lista de canales</p>
+                    <button class="btn btn-primary" id="retryLoadChannels" data-focus="retry">Actualizar canales</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div class="status-info">
+                <span id="channelCount">0 canales</span>
+                <span class="separator">•</span>
+                <span id="connectionStatus">Conectado</span>
+                <span class="separator">•</span>
+                <span id="currentTime"></span>
+                <span class="separator">•</span>
+                <span id="lastUpdate">Última actualización: --:--</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div id="errorModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="errorTitle">Error</h3>
+                <button id="closeErrorModal" class="close-btn" data-focus="close">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="error-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
+                </div>
+                <p id="errorMessage">Ha ocurrido un error inesperado.</p>
+                <div class="error-details hidden" id="errorDetails">
+                    <details>
+                        <summary>Detalles técnicos</summary>
+                        <pre id="errorDetailsText"></pre>
+                    </details>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="retryBtn" class="btn btn-primary" data-focus="retry-error">Reintentar</button>
+                <button id="selectOtherBtn" class="btn btn-secondary" data-focus="select-other">Seleccionar otro canal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="toast toast-success hidden">
+        <div class="toast-content">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20,6 9,17 4,12"></polyline>
+            </svg>
+            <span id="successMessage">Operación exitosa</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

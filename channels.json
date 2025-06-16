@@ -1,0 +1,137 @@
+[
+  {
+    "id": 1,
+    "name": "Tyc Sports",
+    "logo": "https://tvlibreonline.me/img/tyc.webp",
+    "category": "Deportes",
+    "type": "iframe",
+    "url": "https://canalesonline.netlify.app/servidores/cvatt.html?get=VHlDU3BvcnQ",
+    "description": "Los mejores deportes en vivo y resúmenes"
+  },
+  {
+    "id": 2,
+    "name": "Noticias 24/7",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Noticias",
+    "type": "m3u8",
+    "url": "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
+    "description": "Información actualizada al minuto"
+  },
+  {
+    "id": 3,
+    "name": "Deportes Plus",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Deportes",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/jfKfPfyJRdk",
+    "description": "Los mejores eventos deportivos en vivo"
+  },
+  {
+    "id": 4,
+    "name": "Cine Premium",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Películas",
+    "type": "m3u8",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Las mejores películas sin interrupciones"
+  },
+  {
+    "id": 5,
+    "name": "Música TV",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Música",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    "description": "Los mejores videos musicales"
+  },
+  {
+    "id": 6,
+    "name": "Documentales HD",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Educativo",
+    "type": "m3u8",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Documentales de alta calidad"
+  },
+  {
+    "id": 7,
+    "name": "Kids Zone",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Infantil",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/hFZFjoX2cGg",
+    "description": "Contenido seguro para niños"
+  },
+  {
+    "id": 8,
+    "name": "Cocina Gourmet",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Estilo de Vida",
+    "type": "m3u8",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Recetas y técnicas culinarias"
+  },
+  {
+    "id": 9,
+    "name": "Tech News",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Tecnología",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/ScMzIvxBSi4",
+    "description": "Las últimas noticias tecnológicas"
+  },
+  {
+    "id": 10,
+    "name": "Viajes y Aventura",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Viajes",
+    "type": "m3u8",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Explora el mundo desde casa"
+  },
+  {
+    "id": 11,
+    "name": "Historia Channel",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Educativo",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/V-_O7nl0Ii0",
+    "description": "Documentales históricos fascinantes"
+  },
+  {
+    "id": 12,
+    "name": "Fashion TV",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Estilo de Vida",
+    "type": "m3u8",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Moda y tendencias internacionales"
+  },
+  {
+    "id": 13,
+    "name": "Anime Plus",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Entretenimiento",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/qig4KOK2R2g",
+    "description": "Los mejores animes y series japonesas"
+  },
+  {
+    "id": 14,
+    "name": "Naturaleza Salvaje",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Educativo",
+    "type": "m3u8",
+    "url": "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    "description": "Documentales de vida salvaje en ultra alta definición"
+  },
+  {
+    "id": 15,
+    "name": "Retro Gaming",
+    "logo": "/placeholder.svg?height=80&width=80",
+    "category": "Tecnología",
+    "type": "iframe",
+    "url": "https://www.youtube.com/embed/NaPBcUUqbew",
+    "description": "Contenido retro de videojuegos clásicos"
+  }
+]
